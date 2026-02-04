@@ -1,9 +1,11 @@
 body {
     @font-face {
         font-family: "DungGeunMo";
+        src: url("../fonts/DungGeunMo.eot");
         src: 
-            local("DungGeunMo"), 
-            url("../fonts/DungGeunMo.woff") format("woff");
+            url("../fonts/DungGeunMo.eot?#iefix") format("embedded-opentype"), 
+            url("../fonts/DungGeunMo.woff") format("woff"), 
+            url("../fonts/DungGeunMo.ttf") format("truetype");
     }
     font-family: "DungGeunMo";
     font-size: 1.2em;
