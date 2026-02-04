@@ -1,0 +1,63 @@
+body {
+    @font-face {
+        font-family: "DungGeunMo";
+        src: 
+            local("DungGeunMo"), 
+            url("../fonts/DungGeunMo.woff") format("woff");
+    }
+    font-family: "DungGeunMo";
+    font-size: 1.2em;
+    text-align: center;
+    background: #635c48;
+    color: #e8eaa8;
+}
+
+.brand::before, .brand::after {
+    content: "\1f98a";
+}
+
+.header::before, .header::after {
+    content: "\1f374";
+}
+
+.selection {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.1em;
+    border-radius: 20px;
+    background: #4b4b31;
+}
+
+.selection > .head {
+    color: #ffff33;
+}
+
+.selection > .item {
+    display: inline-flex;
+    padding: 0.3em;
+    border-radius: 20px;
+    background: #715c1f;
+}
+
+.selection > .item:has(input[type="radio"]:checked) {
+    background: #752100;
+}
+
+.selection > .item > input[type="radio"] {
+    appearance: none;
+    background: #4b4b31;
+    margin: 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.3em;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    background: #351916;
+    color: inherit;
+}
