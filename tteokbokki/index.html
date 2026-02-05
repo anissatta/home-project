@@ -18,11 +18,15 @@ body {
 .snes-container {
     margin: 22px !important;
 }
+.canvas-container {
+    margin: 13px;
+    text-align: center;
+}
 -->
         </style>
     </head>
 
-    <body>
+    <body onload="init();">
         <div class="container main-container">
 
             <h3 class="snes-container-title has-nature-underline">
@@ -31,6 +35,12 @@ body {
                 <span class="text-ember-color">Story</span> 
             </h3>
 
+            <div class="canvas-container">
+                <canvas id="canvas">
+                    html5 canvas element 
+                </canvas>
+            </div>
+
             <div class="snes-container has-soft-green-bg">
                 <h3 class="snes-container-title has-plumber-underline">
                     Tteok (rice cakes) 
@@ -38,15 +48,15 @@ body {
 
                 <div class="snes-radio snes-radio--vertical">
                     <label class="snes-radio__item has-plumber-icon">
-                        <input type="radio" name="tteok" value="0" checked />
+                        <input onchange="update();" type="radio" name="tteok" value="0" checked />
                         <span class="snes-radio__item__content">tteokbokki-tteok</span>
                     </label>
                     <label class="snes-radio__item has-plumber-icon">
-                        <input type="radio" name="tteok" value="1" />
+                        <input onchange="update();" type="radio" name="tteok" value="1" />
                         <span class="snes-radio__item__content">tteokguk-tteok</span>
                     </label>
                     <label class="snes-radio__item has-plumber-icon">
-                        <input type="radio" name="tteok" value="2" />
+                        <input onchange="update();" type="radio" name="tteok" value="2" />
                         <span class="snes-radio__item__content">noodles-tteok</span>
                     </label>
                 </div>
@@ -59,27 +69,27 @@ body {
 
                 <div class="snes-radio snes-radio--vertical">
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="0" checked />
+                        <input onchange="update();" type="radio" name="sauce" value="0" checked />
                         <span class="snes-radio__item__content">gochujang sauce</span>
                     </label>
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="1" />
+                        <input onchange="update();" type="radio" name="sauce" value="1" />
                         <span class="snes-radio__item__content">tomato sauce</span>
                     </label>
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="2" />
+                        <input onchange="update();" type="radio" name="sauce" value="2" />
                         <span class="snes-radio__item__content">cream sauce</span>
                     </label>
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="3" />
+                        <input onchange="update();" type="radio" name="sauce" value="3" />
                         <span class="snes-radio__item__content">jajang sauce</span>
                     </label>
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="4" />
+                        <input onchange="update();" type="radio" name="sauce" value="4" />
                         <span class="snes-radio__item__content">rosé sauce</span>
                     </label>
                     <label class="snes-radio__item has-nature-icon">
-                        <input type="radio" name="sauce" value="5" />
+                        <input onchange="update();" type="radio" name="sauce" value="5" />
                         <span class="snes-radio__item__content">curry sauce</span>
                     </label>
                 </div>
@@ -92,29 +102,47 @@ body {
 
                 <div class="snes-checkbox has-ember-icons">
                     <label class="snes-checkbox__item">
-                        <input type="checkbox" name="toppings" value="0" checked />
+                        <input onchange="update();" type="checkbox" name="toppings" />
                         <span class="snes-checkbox__item__content">vegs</span>
                     </label>
                     <label class="snes-checkbox__item">
-                        <input type="checkbox" name="toppings" value="1" />
+                        <input onchange="update();" type="checkbox" name="toppings" />
                         <span class="snes-checkbox__item__content">egg</span>
                     </label>
                     <label class="snes-checkbox__item">
-                        <input type="checkbox" name="toppings" value="2" />
+                        <input onchange="update();" type="checkbox" name="toppings" />
                         <span class="snes-checkbox__item__content">eomuk (fish cakes)</span>
                     </label>
                     <label class="snes-checkbox__item">
-                        <input type="checkbox" name="toppings" value="3" />
+                        <input onchange="update();" type="checkbox" name="toppings" />
                         <span class="snes-checkbox__item__content">sausages</span>
                     </label>
                     <label class="snes-checkbox__item">
-                        <input type="checkbox" name="toppings" value="4" />
+                        <input onchange="update();" type="checkbox" name="toppings" />
                         <span class="snes-checkbox__item__content">cheese</span>
                     </label>
                 </div>
             </div>
 
         </div>
+        <script src="./js/main.js"></script>
+        <script>
+function update() {
+    const rad_tteok = document.querySelector('input[name="tteok"]:checked');
+    const rad_sauce = document.querySelector('input[name="sauce"]:checked');
+    const chks_toppings = document.querySelectorAll('input[name="toppings"]');
+
+    const tteok = parseInt(rad_tteok.value, 10);
+    const sauce = parseInt(rad_sauce.value, 10);
+    var toppings = [];
+    for (var i = 0; i < chks_toppings.length; i++) {
+        const chk = chks_toppings[i];
+
+        toppings.push(chk.checked);
+    }
+    applyParams(tteok, sauce, toppings);
+}
+        </script>
     </body>
 
 </html>
