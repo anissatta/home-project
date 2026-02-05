@@ -7,6 +7,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>kim</title>
         <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+        <style>
+<!--
+a {
+    word-break: break-word;
+}
+-->
+        </style>
     </head>
 
     <body>
@@ -26,6 +33,13 @@
             </button>
         </p>
 
+        <p lang="ja">
+           ※タブが開かない時用に各リンクを下記に示します。 
+        </p>
+
+        <ul id="list-urls">
+        </ul>
+
         <script>
 
 const prefixes = [
@@ -39,7 +53,7 @@ const prefixes = [
     'https://search.hani.co.kr/search?searchword=',
     'https://www.mk.co.kr/search?word=',
     'https://search.khan.co.kr/?q=',
-    'https://w3.sbs.co.kr/search/main.do?collection=ALL&sort=DATE&query=',
+    'https://www.joongang.co.kr/search?keyword=',
     'https://imnews.imbc.com/more/search/?search_kwd=',
     'https://news.jtbc.co.kr/search?keyword='
 ];
@@ -50,9 +64,28 @@ function execute() {
     for (var i = 0; i < prefixes.length; i++) {
         const url = prefixes[i] + QUERY;
 
-        window.open(url, 'popup' + i).focus();
+        window.open(url, 'popup' + i);
     }
 }
+
+function generateListItemsFor(id) {
+    const elem = document.getElementById(id);
+    var html = '';
+
+    for (var i = 0; i < prefixes.length; i++) {
+        const url = prefixes[i] + QUERY;
+
+        html += '<li>';
+        html += '<a target="_blank" rel="noopener noreferrer" href="' + url + '">';
+        html += url;
+        html += '</a>';
+        html += '</li>';
+    }
+
+    elem.innerHTML = html;
+}
+
+generateListItemsFor('list-urls');
 
         </script>
 
