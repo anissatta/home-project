@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>kim</title>
+        <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    </head>
+
+    <body>
+
+        <h1 lang="ja">
+            日本の皆様が金健希についてのニュース記事/映像を探すためのツール <span class="tag">ver. 0.1</span> 
+        </h1>
+
+        <p lang="ja">
+            下記のボタンを押すと別タブに検索結果が一気に開きます。 
+            (開かない場合はブラウザの設定を変更して下さい) 
+        </p>
+
+        <p>
+            <button class="button" onclick="execute();">
+                execute 
+            </button>
+        </p>
+
+        <script>
+
+const prefixes = [
+    'https://news.nate.com/search?q=',
+    'https://search.naver.com/search.naver?where=news&query=',
+    'https://www.yna.co.kr/search/index?query=',
+    'https://www.chosun.com/nsearch/?query=',
+    'https://www.news1.kr/search?query=',
+    'https://www.donga.com/news/search?query=',
+    'https://www.munhwa.com/search?word=',
+    'https://search.hani.co.kr/search?searchword=',
+    'https://www.mk.co.kr/search?word=',
+    'https://search.khan.co.kr/?q=',
+    'https://w3.sbs.co.kr/search/main.do?collection=ALL&sort=DATE&query=',
+    'https://imnews.imbc.com/more/search/?search_kwd=',
+    'https://news.jtbc.co.kr/search?keyword='
+];
+
+const QUERY = '%EA%B9%80%EA%B1%B4%ED%9D%AC';
+
+function execute() {
+    for (var i = 0; i < prefixes.length; i++) {
+        const url = prefixes[i] + QUERY;
+
+        window.open(url, 'popup' + i).focus();
+    }
+}
+
+        </script>
+
+    </body>
+
+</html>
