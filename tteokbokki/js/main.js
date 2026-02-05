@@ -36,7 +36,6 @@ const CANVAS_W = 320;
 const CANVAS_H = 320;
 
 function addImage(img, on_complete) {
-    imgs.push(img);
     if (imgs.length == NUM_IMGS) {
         on_complete();
     }
@@ -51,6 +50,7 @@ function loadImages(on_complete) {
         img.onload = function() {
             addImage(this, on_complete);
         };
+        imgs.push(img);
     }
 }
 
