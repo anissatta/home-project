@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>saeng-yang transition</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+        <style>
+<!--
+.footer {
+    text-align: center;
+}
+.stage-container {
+    text-align: center;
+}
+.stage-items {
+    font-size: 200%;
+    font-weight: bold;
+    color: #202020;
+}
+.stage-items > .item.burning {
+    animation: 10s 1 normal burn-out;
+}
+@keyframes burn-out {
+    from {
+        opacity: 1;
+        color: #202020;
+    }
+    to {
+        opacity: 0;
+        color: #f0c0c0;
+    }
+}
+-->
+        </style>
+    </head>
+
+    <body>
+        <div class="hero bg-gray">
+            <div class="hero-body">
+                <h1>
+                    saeng-yang transition 
+                </h1>
+                <p class="lang-ko" lang="ko">
+                    나는 생가(生家)를 떠나고 양가(養家)에 들어가겠다. 
+                </p>
+            </div>
+        </div>
+
+        <div class="stage-container lang-ko" lang="ko">
+            <div class="stage-items">
+                <span id="item1" class="item burning">
+                    ㅁ
+                </span>
+                <span id="item2" class="item burning">
+                    ㅣ
+                </span>
+                <span id="item3" class="item">
+                    ㅇ
+                </span>
+                <span id="item4" class="item burning">
+                    ㅑ
+                </span>
+                <span id="item5" class="item burning">
+                    ㅈ
+                </span>
+                <span id="item6" class="item">
+                    ㅣ
+                </span>
+                <span id="item7" class="item burning">
+                    ㅁ
+                </span>
+                <span id="item8" class="item burning">
+                    ㅏ
+                </span>
+            </div>
+            <div id="loading" class="form-icon loading"></div>
+        </div>
+
+        <div>
+            <p>
+                In this tiny example for CSS animation, 미야지마 or Miyajima (that is, my surname as of today) is turned into something else. Still I cannot disclose the reason why I chose Lee (이) as my destination. Maybe I saw 
+                <a href="https://youtu.be/5eidmxPB86Y" 
+                   target="_blank" rel="noopener noreferrer">
+                    this video clip 
+                    <i class="icon icon-link"></i>
+                </a>
+                in which Lee Sung Kyung explains her manner of maximizing a Korean BBQ restaurant (고깃집) experience that is 
+                having raw meats (<strong>생</strong>고기) first and then marinated ones (<strong>양</strong>념고기) and even fried rice and cold noodles?   
+                Anyway I need a baptism or something like that for myself and I believe that this my wish will be granted soon. 
+                <i class="icon icon-emoji"></i>
+            </p>
+        </div>
+
+        <footer class="footer">
+            2026 &copy; hirosuke 
+        </footer>
+
+        <script>
+const burningHead = document.getElementById('item1');
+
+burningHead.addEventListener('animationend', function() {
+    /* remove the elements that were burnt out */
+    const ashes = document.querySelectorAll('.item.burning');
+    const loading = document.getElementById('loading');
+
+    for (var i = 0; i < ashes.length; i++) {
+        ashes[i].style.display = 'none';
+    }
+    loading.style.display = 'none';
+});
+        </script>
+    </body>
+
+</html>
