@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#4b4b31">
+        <title>이나리 치킨</title>
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+
+    <body>
+
+        <p class="brand">
+                이나리 치킨  
+        </p>
+
+        <p class="header">
+            반반치킨 주문 시스템 
+        </p>
+
+        <div id="sauce-r" class="selection">
+        </div>
+
+        <div id="spiciness-r" class="selection">
+        </div>
+
+        <div id="sauce-l" class="selection">
+        </div>
+
+        <div id="spiciness-l" class="selection">
+        </div>
+
+        <button class="button" onclick="submitOrder();">
+            주문하기 
+        </button>
+
+        <script>
+const sauces = [
+    '고추장소스',
+    '간장마늘소스',
+    '버터마늘소스',
+    '카레소스',
+    '토마토소스'
+];
+
+const spicinesses = [
+    "\uD83C\uDF3F",
+    "\uD83D\uDD25",
+    "\uD83D\uDD25\uD83D\uDD25",
+    '\uD83D\uDD25\uD83D\uDC80\uD83D\uDD25'
+];
+
+function generateSauceSelectionAt(id, side) {
+    const elem = document.getElementById(id);
+    var html = '';
+
+    html += '<p class="head"> ' + side + '엔 어떤 소스를 쓸까요? </p>';
+    for (var i = 0; i < sauces.length; i++) {
+        const sauce = sauces[i];
+
+        html += '<label class="item">';
+        html += '<input type="radio" name="' + id + '" value="' + i + '" ';
+        html += (i == 0? ' checked />' : ' />');
+        html += sauce;
+        html += '</label>';
+    }
+    elem.innerHTML = html;
+}
+
+function generateSpicinessSelectionAt(id) {
+    const elem = document.getElementById(id);
+    var html = '';
+
+    html += '<p class="head"> 매운맛 단계는? </p>';
+    for (var i = 0; i < spicinesses.length; i++) {
+        const spiciness = spicinesses[i];
+
+        html += '<label class="item">';
+        html += '<input type="radio" name="' + id + '" value="' + i + '" ';
+        html += (i == 0? ' checked />' : ' />');
+        html += spiciness;
+        html += '</label>';
+    }
+    elem.innerHTML = html;
+}
+
+function submitOrder() {
+    alert('주문이 완료되었습니다. 조금 기다려 주십시오~');
+}
+
+generateSauceSelectionAt('sauce-r', '오른쪽');
+generateSpicinessSelectionAt('spiciness-r');
+generateSauceSelectionAt('sauce-l', '왼쪽');
+generateSpicinessSelectionAt('spiciness-l');
+
+        </script>
+
+    </body>
+
+</html>

@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Konomiya locator</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+        <!-- OpenLayers -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.8.0/ol.css">
+        <script src="https://cdn.jsdelivr.net/npm/ol@v10.8.0/dist/ol.js"></script>
+        <style>
+<!--
+#map {
+    width: 100%;
+    height: 380px;
+}
+.footer {
+    text-align: center;
+}
+-->
+        </style>
+    </head>
+
+    <body>
+
+        <header class="navbar">
+            <section class="navbar-section">
+                <span class="navbar-brand mr-2">
+                    Konomiya locator 
+                </span>
+                <a href="#get" class="btn btn-link">
+                    <span class="icon icon-emoji"></span>
+                    How can I get my Konomiya card? 
+                </a>
+            </section>
+        </header>
+
+        <div class="input-group">
+            <span class="input-group-addon">
+                Find a store: 
+            </span>
+            <select id="sel-stores" class="form-select">
+            </select>
+        </div>
+
+        <div class="input-group">
+            <button class="input-group-btn btn btn-primary" 
+                    onclick="goToCurrentLocation();">
+                <span class="icon icon-refresh"></span>
+            </button>
+            <button class="input-group-btn btn" 
+                    onclick="goToSelected();">
+                <span class="icon icon-arrow-right"></span>
+                Go to the selected store 
+            </button>
+        </div>
+
+        <div>
+            <div id="map" class="map"></div>
+        </div>
+
+        <div lang="ko">
+            <h1 class="lang-ko">
+                <span class="icon icon-link"></span> 
+                일본에 오시면 이걸 해 보세요: 고노미야 선불카드 구매하기 
+            </h1>
+            <p class="lang-ko">
+                우선 이 지도에 따라 고노미야의 한 지점에 가시길 바랍니다. 다만, 나라현 등에 있다는 고노미야와 다른 이름을 가진 슈퍼마켓에서도 같은 선불카드를 살 수 있는지 잘은 모르니까 가능한다면 오사카부 내에 있는 고노미야서 사 주시길 바랍니다. 아마 모든 지점엔 서비스 카운터가 있으니 여기서 한 장 사 보세요. 만약 이걸 일본어를 할 수 없으시는 분이 읽으시면 단지 '프리페이도 카도 오 크다사이'(プリペイドカードを下さい)고 해 보시길 바랍니다. 수백 엔으로 살 수 있지만 카드로 지불할 수 있는지는 저는 모릅니다. 선불카드 구매 시에 안내문도 받으실 것인데요. 이 안내문이나 선불카드 뒷면에 제가 공개한 URL가 쓰여 있을 것입니다. (<span>https://www.vcsys.com/s/konomiya/m/</span>) 
+            </p>
+        </div>
+
+        <div id="get">
+            <h1>
+                <span class="icon icon-link"></span> 
+                How can I get my Konomiya card? 
+            </h1>
+            <p>
+                Visit one of the stores shown on the map and go to the Service Counter, which they call so, and ask a clerk who works within that that you want to purchase one, saying <em>Puri-peido kaado wo kudasai.</em> Then you shall receive the card and a manual along with it. The URL which I have shown on my website must be printed on them. (that is <span>https://www.vcsys.com/s/konomiya/m/</span>) 
+            </p>
+        </div>
+
+        <script>
+
+const pins = [
+    {
+        name: 'NISHIYAMA荒河店', 
+        lon: 135.112206, 
+        lat: 35.313034
+    },
+    {
+        name: 'スーパーおくやま上牧店', 
+        lon: 135.719162, 
+        lat: 34.562087
+    },
+    {
+        name: 'スーパーおくやま橿原店', 
+        lon: 34.521612, 
+        lat: 135.814956
+    },
+    {
+        name: 'スーパーおくやま高田店', 
+        lon: 135.747309, 
+        lat: 34.529915
+    },
+    {
+        name: 'スーパーおくやま新町店', 
+        lon: 135.793206, 
+        lat: 34.558942
+    },
+    {
+        name: 'スーパーおくやま結崎店', 
+        lon: 135.785706, 
+        lat: 34.584411
+    },
+    {
+        name: 'スーパーおくやま三笠店', 
+        lon: 135.786377, 
+        lat: 34.550164
+    },
+    {
+        name: 'NISHIYAMA有野店', 
+        lon: 135.218028, 
+        lat: 34.809773
+    },
+    {
+        name: 'NISHIYAMA三田フラワータウン店', 
+        lon: 135.203152, 
+        lat: 34.885457
+    },
+    {
+        name: '尼崎店', 
+        lon: 135.407782, 
+        lat: 34.724525
+    },
+    {
+        name: '泉大津店', 
+        lon: 135.407879, 
+        lat: 34.500774
+    },
+    {
+        name: '和泉府中店', 
+        lon: 135.423824, 
+        lat: 34.486636
+    },
+    {
+        name: '摂津市駅前店', 
+        lon: 135.556081, 
+        lat: 34.784225
+    },
+    {
+        name: '摂津店', 
+        lon: 135.551843, 
+        lat: 34.760699
+    },
+    {
+        name: '住道店', 
+        lon: 135.61408, 
+        lat: 34.703915
+    },
+    {
+        name: '箕面店', 
+        lon: 135.509985, 
+        lat: 34.844749
+    },
+    {
+        name: '富田林店', 
+        lon: 135.599093, 
+        lat: 34.50403
+    },
+    {
+        name: '茨木店', 
+        lon: 135.58125, 
+        lat: 34.81767
+    },
+    {
+        name: '寝屋川黒原店', 
+        lon: 135.597563, 
+        lat: 34.758485
+    },
+    {
+        name: '寝屋川店', 
+        lon: 135.610016, 
+        lat: 34.759882
+    },
+    {
+        name: '近鉄八尾駅前店', 
+        lon: 135.60323, 
+        lat: 34.632312
+    },
+    {
+        name: '門真千石東店', 
+        lon: 135.610543, 
+        lat: 34.7227
+    },
+    {
+        name: '高槻西冠店', 
+        lon: 135.620951, 
+        lat: 34.833029
+    },
+    {
+        name: '高槻店', 
+        lon: 135.5956702, 
+        lat: 34.8274362
+    },
+    {
+        name: '羽曳が丘店', 
+        lon: 135.593847, 
+        lat: 34.542019
+    },
+    {
+        name: '堺インター店', 
+        lon: 135.484101, 
+        lat: 34.512619
+    },
+    {
+        name: '美原店', 
+        lon: 135.546793, 
+        lat: 34.534897
+    },
+    {
+        name: '深井店', 
+        lon: 135.486751, 
+        lat: 34.526363
+    },
+    {
+        name: '浜寺石津店', 
+        lon: 135.457385, 
+        lat: 34.555622
+    },
+    {
+        name: '中もず店', 
+        lon: 135.513337, 
+        lat: 34.540025
+    },
+    {
+        name: '竹城台店', 
+        lon: 135.502392, 
+        lat: 34.497218
+    },
+    {
+        name: '堺東店', 
+        lon: 135.480641, 
+        lat: 34.570036
+    },
+    {
+        name: '泉ヶ丘店', 
+        lon: 135.511377, 
+        lat: 34.498219
+    },
+    {
+        name: '河内長野店', 
+        lon: 135.5623, 
+        lat: 34.474442
+    },
+    {
+        name: '南花台店', 
+        lon: 135.556071,  
+        lat: 34.428938
+    },
+    {
+        name: '北青葉台店', 
+        lon: 135.570646, 
+        lat: 34.426696
+    },
+    {
+        name: '新高石店', 
+        lon: 135.440111, 
+        lat: 34.515315
+    },
+    {
+        name: 'アプラ高石店', 
+        lon: 135.434066, 
+        lat: 34.521355
+    },
+    {
+        name: '狭山店', 
+        lon: 135.545506, 
+        lat: 34.482752
+    },
+    {
+        name: '守口店', 
+        lon: 135.589791, 
+        lat: 34.755257
+    },
+    {
+        name: '若江岩田店', 
+        lon: 135.606892, 
+        lat: 34.661378
+    },
+    {
+        name: '弥刀店', 
+        lon: 135.584846, 
+        lat: 34.640033
+    },
+    {
+        name: '徳庵店', 
+        lon: 135.582512, 
+        lat: 34.693403
+    },
+    {
+        name: '大蓮東店', 
+        lon: 135.586137, 
+        lat: 34.634258
+    },
+    {
+        name: '蒲生四丁目店', 
+        lon: 135.54474, 
+        lat: 34.700603
+    },
+    {
+        name: '鶴橋駅前店', 
+        lon: 135.532983, 
+        lat: 34.666561
+    },
+    {
+        name: '南住吉店', 
+        lon: 135.505713, 
+        lat: 34.606132
+    },
+    {
+        name: '赤川店', 
+        lon: 135.531757, 
+        lat: 34.724139
+    },
+    {
+        name: '南田辺店', 
+        lon: 135.526303, 
+        lat: 34.617189
+    },
+    {
+        name: '緑橋店', 
+        lon: 135.544417, 
+        lat: 34.681861
+    },
+    {
+        name: '平野西店', 
+        lon: 135.547059, 
+        lat: 34.620622
+    },
+    {
+        name: 'ピコ泉尾店', 
+        lon: 135.472197, 
+        lat: 34.659374
+    },
+    {
+        name: '放出店', 
+        lon: 135.566807, 
+        lat: 34.689105
+    },
+    {
+        name: '鴫野西店', 
+        lon: 135.541043, 
+        lat: 34.693101
+    },
+    {
+        name: '鴫野店', 
+        lon: 135.54526, 
+        lat: 34.692214
+    },
+    {
+        name: '粉浜店', 
+        lon: 135.491703, 
+        lat: 34.617722
+    },
+    {
+        name: '牧野店', 
+        lon: 135.676637, 
+        lat: 34.841008
+    },
+    {
+        name: '枚方店', 
+        lon: 135.633102, 
+        lat: 34.80862
+    },
+    {
+        name: 'くずは店', 
+        lon: 135.683668, 
+        lat: 34.858167
+    },
+    {
+        name: '中切店', 
+        lon: 136.969066, 
+        lat: 35.226473
+    },
+    {
+        name: '甚目寺店', 
+        lon: 136.829806, 
+        lat: 35.188748
+    },
+    {
+        name: '東浦店', 
+        lon: 136.971022, 
+        lat: 34.951331
+    },
+    {
+        name: '武豊店', 
+        lon: 136.913851, 
+        lat: 34.849589
+    },
+    {
+        name: '青木店', 
+        lon: 137.180775, 
+        lat: 35.117494
+    },
+    {
+        name: '豊明店', 
+        lon: 137.007399, 
+        lat: 35.064902
+    },
+    {
+        name: '沓掛店', 
+        lon: 137.013238, 
+        lat: 35.055581
+    },
+    {
+        name: '笠寺店', 
+        lon: 136.930462, 
+        lat: 35.094625
+    },
+    {
+        name: '城西店', 
+        lon: 136.862342, 
+        lat: 35.228078
+    },
+    {
+        name: 'べり－ぐっど店', 
+        lon: 136.987605, 
+        lat: 35.128363
+    },
+    {
+        name: '天白店', 
+        lon: 136.982678, 
+        lat: 35.125765
+    },
+    {
+        name: '菅田店', 
+        lon: 136.96849, 
+        lat: 35.117529
+    },
+    {
+        name: '島田店', 
+        lon: 136.989456, 
+        lat: 35.110333
+    },
+    {
+        name: '滝ノ水店', 
+        lon: 136.978499, 
+        lat: 35.086921
+    },
+    {
+        name: '神の倉店', 
+        lon: 137.013704, 
+        lat: 35.099312
+    },
+    {
+        name: '砂田橋店', 
+        lon: 136.963158, 
+        lat: 35.187212
+    },
+    {
+        name: '中根店', 
+        lon: 136.957963, 
+        lat: 35.118894
+    },
+    {
+        name: '東山店', 
+        lon: 136.970672, 
+        lat: 35.16079
+    },
+    {
+        name: '日比津店', 
+        lon: 136.863174, 
+        lat: 35.182007
+    },
+    {
+        name: '平田店', 
+        lon: 136.859768, 
+        lat: 35.226317
+    },
+    {
+        name: 'コノミヤワンダー店', 
+        lon: 137.257636, 
+        lat: 35.36792
+    },
+    {
+        name: '美濃加茂店', 
+        lon: 137.01821, 
+        lat: 35.440115
+    },
+    {
+        name: '可児店', 
+        lon: 137.06233, 
+        lat: 35.433136
+    },
+    {
+        name: '鵜沼店', 
+        lon: 136.939285, 
+        lat: 35.405507
+    },
+    {
+        name: 'トミダヤ羽島店', 
+        lon: 136.70746, 
+        lat: 35.3332
+    },
+    {
+        name: 'トミダヤ笠松店', 
+        lon: 136.749093, 
+        lat: 35.359484
+    },
+    {
+        name: 'トミダヤ養老店', 
+        lon: 136.551819, 
+        lat: 35.302025
+    },
+    {
+        name: 'トミダヤ三田洞店', 
+        lon: 136.78305, 
+        lat: 35.480733
+    },
+    {
+        name: 'コノミヤ島店', 
+        lon: 136.735919, 
+        lat: 35.423807
+    },
+    {
+        name: 'トミダヤ垂井店', 
+        lon: 136.531514, 
+        lat: 35.371296
+    },
+    {
+        name: 'トミダヤ大野店', 
+        lon: 136.637911, 
+        lat: 35.471611
+    },
+    {
+        name: 'トミダヤ池田店', 
+        lon: 136.575666, 
+        lat: 35.433881
+    },
+    {
+        name: 'トミダヤ結店', 
+        lon: 136.668585, 
+        lat: 35.362116
+    },
+    {
+        name: 'トミダヤ神戸店', 
+        lon: 136.603363, 
+        lat: 35.415612
+    },
+    {
+        name: 'コノミヤ巣南店', 
+        lon: 136.652386, 
+        lat: 35.413292
+    },
+    {
+        name: 'トミダヤ岐大店', 
+        lon: 136.686629, 
+        lat: 35.384404
+    },
+    {
+        name: 'トミダヤ宿地店', 
+        lon: 136.60807, 
+        lat: 35.375599
+    }
+];
+
+const selStores = document.getElementById('sel-stores');
+
+const vecSource = new ol.source.Vector();
+const vecLayer = new ol.layer.Vector({
+    source: vecSource, 
+    style: new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 1], 
+            src: 'pin.png'
+        })
+    })
+});
+const map = new ol.Map({
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ],
+    target: 'map', 
+    view: new ol.View({
+        center: ol.proj.fromLonLat([135.50218, 34.69374]), 
+        zoom: 10
+    })
+});
+map.addLayer(vecLayer);
+
+/* add pins */
+for (var i = 0; i < pins.length; i++) {
+    const pin = pins[i];
+    const pinFeature = new ol.Feature({
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([pin.lon, pin.lat])),
+    });
+
+    vecSource.addFeature(pinFeature);
+}
+
+/* create store selections */
+for (var i = 0; i < pins.length; i++) {
+    var html = '';
+
+    html += '<option value="' + i + '">';
+    html += pins[i].name;
+    html += '</option>';
+    selStores.innerHTML += html;
+}
+
+function goToCurrentLocation() {
+    const view = map.getView();
+
+    if(!navigator.geolocation) {
+        alert('ERROR: Geolocation is not supported by your browser');
+    } else {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                /* success */
+                const lon = position.coords.longitude;
+                const lat = position.coords.latitude;
+
+                view.setCenter(ol.proj.fromLonLat([lon, lat]));
+                view.setZoom(13);
+            }, 
+            function () {
+                /* error */
+                alert('ERROR: Unable to retrieve your location');
+            });
+    }
+}
+
+function goToSelected() {
+    const view = map.getView();
+    const selected = parseInt(selStores.value, 10);
+    const lon = pins[selected].lon;
+    const lat = pins[selected].lat;
+
+    view.setCenter(ol.proj.fromLonLat([lon, lat]));
+    view.setZoom(16);
+}
+
+        </script>
+
+        <footer class="footer">
+            2026 &copy; hirosuke 
+        </footer>
+
+    </body>
+
+</html>

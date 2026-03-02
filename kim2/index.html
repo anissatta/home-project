@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>kim2</title>
+        <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+        <style>
+<!--
+body {
+    background: #c0c0c0;
+}
+a {
+    word-break: break-word;
+}
+-->
+        </style>
+    </head>
+
+    <body>
+
+        <h1 lang="ja">
+            日本の皆様が「韓国ではソルラル連休中に裁判所も休む」ということを確認する為のツール <span class="tag">ver. 0.2</span> 
+        </h1>
+
+        <p>
+            <span lang="ja">
+                STEP1: 下記のボタンをクリックして検索用キーワードをコピーして下さい。　
+            </span>
+        </p>
+        <p>
+            <button class="button" 
+                    data-clipboard-text="오늘의 주요일정 법조" 
+                    onclick="alert('Copied!');">
+                Copy 
+            </button>
+        </p>
+
+        <p>
+            <span lang="ja">
+                STEP2: 下記のリンクにアクセスして検索欄(モバイル版ではメニューの中にあります)に先ほどコピーしたキーワードを貼り付けて下さい。 
+            </span>
+        </p>
+        <p>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.newsis.com/">
+                https://www.newsis.com/
+            </a>
+        </p>
+
+        <p>
+            <span lang="ja">
+                STEP3: すると2月13日(金)以降日程がないことがお分かりになるかと思います。上のボタンでキーワードがコピーされない場合は下記を手動でコピーして下さい。 
+            </span>
+        </p>
+        <p>
+            <mark lang="ko" translate="no">
+                오늘의 주요일정 법조 
+            </mark>
+        </p>
+
+        <p>
+            <span lang="ja">
+                <span class="tag">ver. 0.2</span> 
+                他の媒体に掲載されている裁判日程は下記にて検索可能です。 
+                (上のNewsisは検索結果への直リンクを禁止しているので上記のような方式を採用しました) 
+            </span>
+        </p>
+        <ul>
+            <li>
+                <a target="_blank" rel="noopener noreferrer" 
+                   href="https://www.lawtimes.co.kr/news/articleList.html?sc_area=A&sc_word=%EC%98%A4%EB%8A%98%EC%9D%98+%EB%B2%95%EC%A1%B0">
+                    https://www.lawtimes.co.kr/news/articleList.html?sc_area=A&sc_word=%EC%98%A4%EB%8A%98%EC%9D%98+%EB%B2%95%EC%A1%B0 
+                </a>
+            </li>
+            <li>
+                <a target="_blank" rel="noopener noreferrer" 
+                   href="https://www.google.com/search?q=site%3Awww.fnnews.com+%EC%98%A4%EB%8A%98%EC%9D%98+%EC%A3%BC%EC%9A%94%EC%9D%BC%EC%A0%95+%EB%B2%95%EC%A1%B0+">
+                    https://www.google.com/search?q=site%3Awww.fnnews.com+%EC%98%A4%EB%8A%98%EC%9D%98+%EC%A3%BC%EC%9A%94%EC%9D%BC%EC%A0%95+%EB%B2%95%EC%A1%B0+
+                </a>
+            </li>
+        </ul>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js"></script>
+        <script>
+var cb = new ClipboardJS('.button');
+        </script>
+
+    </body>
+
+</html>

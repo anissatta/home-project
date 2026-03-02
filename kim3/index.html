@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>kim3</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+        <style>
+<!--
+body {
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='64' viewBox='0 0 32 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 28h20V16h-4v8H4V4h28v28h-4V8H8v12h4v-8h12v20H0v-4zm12 8h20v4H16v24H0v-4h12V36zm16 12h-4v12h8v4H20V44h12v12h-4v-8zM0 36h8v20H0v-4h4V40H0v-4z' fill='%23b0b0b0' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+a {
+    word-break: break-word;
+}
+img.is-bordered {
+    border: 2px dotted #0000c0;
+}
+.footer {
+    text-align: center;
+}
+.inst-section {
+    margin: 3px;
+}
+-->
+        </style>
+    </head>
+
+    <body>
+
+        <div class="hero bg-primary">
+            <div class="hero-body">
+                <h1 lang="ja" class="lang-ja">
+                    日本の皆様が金健希の裁判の公判期日を確認する為の補助ツール 
+                    <span class="label">Ver. 0.1</span>
+                </h1>
+            </div>
+        </div>
+
+        <div class="inst-section">
+            <h3>Step 1.</h3>
+            <p lang="ja" class="lang-ja">
+                下記のソウル中央地方法院のウェブサイトにアクセスし、その下にある写真にあるような欄を探して下さい。 
+            </p>
+            <p>
+                <a href="https://seoul.scourt.go.kr/main/new/Main.work" 
+                   target="_blank" rel="noopener noreferrer">
+                    <span class="icon icon-link"></span> 
+                    https://seoul.scourt.go.kr/main/new/Main.work 
+                </a>
+            </p>
+            <img class="img-responsive is-bordered" alt="image" src="./img/form1.png">
+        </div>
+
+        <div class="inst-section">
+            <h3>Step 2.</h3>
+            <p lang="ja" class="lang-ja">
+                下記の例に従って入力を行って下さい。①〜②については主に選択肢より該当のものを選ぶことにより入力します。
+                <mark>④についてはその上に表示される無作為な数字を入力して下さい。</mark>
+                ③にはハングルを入力しますが、ハングルの入力手段をお持ちでない方は下記をコピーして貼り付けて下さい。 
+            </p>
+            <div class="input-group">
+                <input type="text" class="form-input" value="김건희" readonly />
+                <button class="btn input-group-btn" 
+                        data-clipboard-text="김건희">
+                    Copy 
+                </button>
+            </div>
+            <img class="img-responsive is-bordered" alt="image" src="./img/form2.png">
+        </div>
+
+        <div class="inst-section">
+            <h3>Step 3.</h3>
+            <p lang="ja" class="lang-ja">
+                虫眼鏡のアイコンをクリックすると画面が切り替わりますが、<mark>ここで重要なのは一見何も進んでいないように見える画面が表示されてもそのまま根気強く待つことです。</mark>数十秒後には裁判の概要についての画面に遷移します。 
+            </p>
+        </div>
+
+        <div class="inst-section">
+            <h3>Step 4.</h3>
+            <p lang="ja" class="lang-ja">
+                裁判の概要についての画面に移ったら、下記の写真にあるような項目を探し赤で印をつけたボタンを押します。 
+            </p>
+            <img class="img-responsive is-bordered" alt="image" src="./img/list1.png">
+        </div>
+
+        <div class="inst-section">
+            <h3>Step 5.</h3>
+            <p lang="ja" class="lang-ja">
+                すると下記のような公判期日一覧の画面に遷移します。
+                2月3日の公判は「기일변경」(期日変更)となり次の3月4日に延期されたことが分かるかと思います。
+                今回は金健希の2つめの刑事裁判である<mark>2025고합1506</mark>(ちなみにこのコードを「事件番号」といいます)について調べましたが、
+                既に1審が終わっている<mark>2025고합1223</mark>についても同様の方法で調べることが可能ですから、試してみて下さい。 
+            </p>
+            <img class="img-responsive is-bordered" alt="image" src="./img/list2.png">
+        </div>
+
+        <footer class="footer">
+            2026 &copy; hirosuke 
+        </footer>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js"></script>
+        <script>
+var cb = new ClipboardJS('.btn');
+        </script>
+
+    </body>
+
+</html>
