@@ -258,6 +258,10 @@ function redraw() {
     ctx.fillStyle = 'rgb(200, 200, 200)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
+    /* show outlet code. */
+    const text = 'NEWS OUTLET CODE: ' + colors[cid][0];
+    document.getElementById('txt_outlet').innerText = text;
+
     /* draw sakuras. */
     for (var i = 0; i < sakuras.length; i++) {
         const sakura = sakuras[i];
