@@ -211,8 +211,9 @@ function drawSakura(sakura) {
             break;
     }
 
+    const trans = 5 * sakura.id + 32;
     ctx.drawImage(imgs[offset + sakura.movement], 
-                  sakura.x, sakura.y);
+                  sakura.x, sakura.y, trans, trans);
 }
 
 function redraw() {
@@ -220,6 +221,7 @@ function redraw() {
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
     /* draw sakuras. */
+    ctx.globalAlpha = 0.5;
     for (var i = 0; i < sakuras.length; i++) {
         const sakura = sakuras[i];
         const next_pos = get_next_pos(sakura.x, sakura.y, 
@@ -239,6 +241,7 @@ function redraw() {
 
         drawSakura(sakura);
     }
+    ctx.globalAlpha = 1.0;
 }
 
 function animate() {
@@ -255,8 +258,10 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-function randomSakura() {
+function randomSakura(id) {
     var sakura = Object();
+
+    sakura.id = id;
     sakura.x = Math.floor(Math.random() * CANVAS_W);
     sakura.y = Math.floor(Math.random() * CANVAS_H);
     sakura.dx = Math.floor(Math.random() * CANVAS_W);
@@ -283,7 +288,7 @@ function init() {
 
     /* generate sakuras. */
     for (var i = 0; i < 10; i++) {
-        sakuras.push(randomSakura());
+        sakuras.push(randomSakura(i));
     }
 
     loadImages(function() {
