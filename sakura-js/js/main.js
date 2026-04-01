@@ -43,6 +43,34 @@ const IMG_SZ = 32;
 const CANVAS_W = 320;
 const CANVAS_H = 480;
 
+const colors = [
+    ["NEWSIS",  "#00FFFF", 1], 
+    ["CHOSUN1", "#D2691E", 1], 
+    ["CHOSUN2", "#D2691E", 1], 
+    ["MK",      "#8B0000", 1], 
+    ["HK",      "#2F4F4F", 1], 
+    ["HBIZ",    "#BC8F8F", 1], 
+    ["KPOP",    "#FF6347", 1], 
+    ["PBS",  "#00FF7F", 2], 
+    ["SDOT", "#4169E1", 2], 
+    ["NYT",  "#696969", 2], 
+    ["GDN1", "#000080", 2], 
+    ["GDN2", "#000080", 2], 
+    ["GDN3", "#000080", 2], 
+    ["GDNC", "#000080", 2], 
+    ["HILL", "#191970", 2], 
+    ["MSNBC", "#008080", 2], 
+    ["FOX",  "#A0522D", 2], 
+    ["FP",   "#FF4500", 2], 
+    ["IRAN", "#6B8E23", 2], 
+    ["ET",   "#800000", 2], 
+    ["CGTN", "#A52A2A", 2], 
+    ["NDTV", "#B8860B", 2], 
+    ["DB",     "#FF8C00", 2], 
+    ["ASAHI",  "#696969", 2], 
+    ["NIKKEI", "#708090", 2]
+];
+
 var canvas = null;
 var ctx = null;
 var last = null;
@@ -119,7 +147,7 @@ function get_next_dest(sx, sy) {
     return ([Math.floor(x), Math.floor(y)]);
 }
 
-function drawSakura(sakura) {
+function drawSakura(sakura, cid) {
     // determine which bitmap to use. 
     const significant = 8;
     const x_now = sakura.x;
@@ -214,14 +242,23 @@ function drawSakura(sakura) {
     const trans = 5 * sakura.id + 32;
     ctx.drawImage(imgs[offset + sakura.movement], 
                   sakura.x, sakura.y, trans, trans);
+
+    // make this look like the turk as possible. 
+    ctx.globalCompositeOperation = "source-in";
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = colors[cid][1];
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1.0;
 }
 
 function redraw() {
+    const cid = Math.floor(colors.length * Math.random());
+
     ctx.fillStyle = 'rgb(200, 200, 200)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
     /* draw sakuras. */
-    ctx.globalAlpha = 0.5;
     for (var i = 0; i < sakuras.length; i++) {
         const sakura = sakuras[i];
         const next_pos = get_next_pos(sakura.x, sakura.y, 
@@ -239,9 +276,8 @@ function redraw() {
         sakuras[i].y = next_y;
         sakuras[i].movement = (sakuras[i].movement == 0)? 1 : 0;
 
-        drawSakura(sakura);
+        drawSakura(sakura, cid);
     }
-    ctx.globalAlpha = 1.0;
 }
 
 function animate() {
