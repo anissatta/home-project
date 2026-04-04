@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja" translate="no">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lesson3</title>
+        <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+        <style>
+<!--
+body {
+    background: #c0c0c0;
+}
+#canvas {
+    border: 3px solid blue;
+}
+-->
+        </style>
+    </head>
+
+    <body onload="init();">
+
+        <div class="window" style="width: 100%;">
+            <div class="title-bar">
+                <div class="title-bar-text">
+                    &#x1f3eb; lesson 3 
+                </div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+
+                <div>
+                    <p>
+                        turkに表示されているマウスポインタとそれを追いかける猫は下記のアルゴリズムによって位置座標等を計算し描画しています。 
+                    </p>
+                    <p>
+                        このアルゴリズムは時間経過を現す変数(ここではt)を与えられると一定の座標や使用すべき画像が決定されるというものです。 
+                    </p>
+                    <p>
+                        下のスライドバーを調整して、どんな結果が出てくるか調べてみましょう &#x2757; 
+                    </p>
+                </div>
+
+                <div class="field-row" style="width: 320px;">
+                    <input id="range-t" type="range" name="volume" min="0" max="300" step="1" 
+                           value="0" onchange="range_t_changed();"/>
+                    <label for="range-t">
+                        t (変数): <span id="txt-t"></span>
+                    </label>
+                </div>
+
+                <div class="field-row">
+                    <p>
+                        <a href="https://github.com/anissatta/home-project/blob/main/neko/getoneko.py" 
+                           target="_blank" rel="noopener noreferrer">
+                            getoneko.py 
+                        </a>
+                        が計算しました: 
+                    </p>
+                </div>
+
+                <div class="field-row">
+                    <ul>
+                        <li>
+                            X座標は <span id="txt-x"></span> , 
+                        </li>
+                        <li>
+                            Y座標は <span id="txt-y"></span> , 
+                        </li>
+                        <li>
+                            画像ファイルは 「 <span id="txt-filnm"></span> 」 を使うべし! 
+                        </li>
+                    </ul>
+                    <figure>
+                        <img id="img-filnm" alt="sample" src="#">
+                        <figcaption id="txt-filnm-alt">
+                            n/a 
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div>
+                    <p>
+                        さあturkさん、上の情報をもとに猫とマウスポインタを描画して下さい。 
+                    </p>
+                    <p>
+                        猫の先にあるマウスポインタの位置座標は上の変数tに一定の正の整数を加算したものをgetoneko.pyに与えれば計算できますね。 
+                    </p>
+                    <p>
+                            (これはいわば猫が将来行くであろう未来の座標です) 
+                    </p>
+                </div>
+
+                <div class="canvas-container">
+                    <p>
+                        	&#x1f916; turk: わかりました。(描画にはImageMagick 	&#x1fa84; を使用します〜) 
+                    </p>
+                    <canvas id="canvas">
+                        html5 canvas element 
+                    </canvas>
+                </div>
+
+            </div>
+            <div class="status-bar">
+                <p class="status-bar-field">
+                    &copy; hirosuke miyajima 
+                </p>
+            </div>
+        </div>
+
+        <script src="./js/getoneko.js"></script>
+        <script>
+
+const CANVAS_W = 400;
+const CANVAS_H = 400;
+var canvas = null;
+var ctx = null;
+
+function cls() {
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+    ctx.strokeStyle = 'rgb(128, 128, 128)';
+    ctx.lineWidth = 1;
+    /* horiz. grids. */
+    for (var y = 0; y < CANVAS_H; y += 20) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(CANVAS_W, y);
+        ctx.stroke();
+    }
+    /* vert. grids. */
+    for (var x = 0; x < CANVAS_W; x += 20) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, CANVAS_H);
+        ctx.stroke();
+    }
+}
+
+function range_t_changed() {
+    const range_t = document.getElementById('range-t');
+    const res = getoneko(parseInt(range_t.value, 10));
+    const res2 = getoneko(parseInt(range_t.value, 10) + 5);
+
+    document.getElementById('txt-t').innerText = range_t.value;
+    document.getElementById('txt-x').innerText = res.x;
+    document.getElementById('txt-y').innerText = res.y;
+    document.getElementById('txt-filnm').innerText = res.filnm;
+    document.getElementById('img-filnm').src = 'img/' + res.filnm;
+    document.getElementById('txt-filnm-alt').innerText = res.filnm;
+
+    /* do some drawing. */
+    cls();
+    var neko = new Image();
+    neko.src = 'img/' + res.filnm;
+    neko.onload = function() {
+        ctx.drawImage(this, res.x, res.y);
+    };
+    var pointer = new Image();
+    pointer.src = 'img/pointer.png';
+    pointer.onload = function() {
+        ctx.drawImage(this, res2.x, res2.y);
+    };
+}
+
+function init() {
+    canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+    canvas.width = CANVAS_W;
+    canvas.height = CANVAS_H;
+
+    /* force fire range-changed event. */
+    range_t_changed();
+}
+
+        </script>
+
+    </body>
+
+</html>
