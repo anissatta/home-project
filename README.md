@@ -5,6 +5,7 @@
 - https://anissatta.github.io/home-project/m2l/index.html
 - https://anissatta.github.io/home-project/konomiya/index.html
 - :new: https://anissatta.github.io/home-project/sakura-js/index.html
+- :new: https://anissatta.github.io/home-project/lesson3/index.html
 
 ---- 
 
