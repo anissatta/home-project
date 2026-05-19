@@ -63,7 +63,8 @@ const IMG_URLS = [
     './img/upright2_sakura.png', 
     './img/utogi1_sakura.png', 
     './img/utogi2_sakura.png',
-    './img/pointer.png'
+    './img/pointer.png',
+    './img/icons.png'
 ];
 const NUM_IMGS = IMG_URLS.length;
 const CANVAS_W = 1920;
@@ -75,6 +76,7 @@ var loaded = 0;
 var last = null;
 var generation = 0;
 var show_pointer = false;
+var show_icons = false;
 
 function addImage(on_complete) {
     loaded++;
@@ -122,11 +124,14 @@ function redraw() {
 
     ctx.fillStyle = 'rgb(210, 210, 210)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    if (show_icons) {
+        ctx.drawImage(imgs[65], CANVAS_W - 86, 24);
+    }
     drawSakuras();
     drawTime();
     ctx.drawImage(imgs[neko.imgid], neko.x, neko.y);
     if (show_pointer) {
-        const pointer = getoneko(generation + 2);
+        const pointer = getoneko(generation + 3);
 
         ctx.drawImage(imgs[64], pointer.x, pointer.y);
     }
@@ -149,6 +154,10 @@ function animate() {
 
 function togglePointer() {
     show_pointer = !show_pointer;
+}
+
+function toggleIcons() {
+    show_icons = !show_icons;
 }
 
 function init() {
