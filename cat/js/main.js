@@ -64,7 +64,8 @@ const IMG_URLS = [
     './img/utogi1_sakura.png', 
     './img/utogi2_sakura.png',
     './img/pointer.png',
-    './img/icons.png'
+    './img/icons.png',
+    './img/titlebar.png'
 ];
 const NUM_IMGS = IMG_URLS.length;
 const CANVAS_W = 1920;
@@ -98,6 +99,28 @@ function loadImages(on_complete) {
     }
 }
 
+function drawWinContent(x, y) {
+    ctx.globalAlpha = 0.8;
+    ctx.fillStyle = 'rgb(0, 0, 0)';
+    ctx.fillRect(x, y, 480, 300);
+    ctx.globalAlpha = 1.0;
+
+    ctx.font = '23px monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';   
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.fillText('Welcome to our telnet service!', x, y);
+    ctx.fillText('Please enter a command.', x, y + 30);
+    const command = document.getElementById('txt_command').value;
+    ctx.fillStyle = 'rgb(0, 255, 0)';
+    ctx.fillText('> ' + command, x, y + 60);
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.fillText('Sorry "' + command + '"', x, y + 90);
+    ctx.fillText('is not recognized by our system.', x, y + 120);
+    ctx.fillText('Maybe it will be upgraded soon', x, y + 150);
+    ctx.fillText('and you may be able to use this.', x, y + 180);
+}
+
 function drawTime() {
     const now = new Date();
     var datestr = '';
@@ -121,12 +144,16 @@ function drawTime() {
 
 function redraw() {
     const neko = getoneko(generation);
+    const win_x = 320;
+    const win_y = 480;
 
     ctx.fillStyle = 'rgb(210, 210, 210)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
     if (show_icons) {
         ctx.drawImage(imgs[65], CANVAS_W - 86, 24);
     }
+    ctx.drawImage(imgs[66], win_x, win_y);
+    drawWinContent(win_x, win_y + 21);
     drawSakuras();
     drawTime();
     ctx.drawImage(imgs[neko.imgid], neko.x, neko.y);
