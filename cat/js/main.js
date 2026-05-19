@@ -62,7 +62,8 @@ const IMG_URLS = [
     './img/upright1_sakura.png', 
     './img/upright2_sakura.png', 
     './img/utogi1_sakura.png', 
-    './img/utogi2_sakura.png'
+    './img/utogi2_sakura.png',
+    './img/pointer.png'
 ];
 const NUM_IMGS = IMG_URLS.length;
 const CANVAS_W = 1920;
@@ -73,6 +74,7 @@ var imgs = [];
 var loaded = 0;
 var last = null;
 var generation = 0;
+var show_pointer = false;
 
 function addImage(on_complete) {
     loaded++;
@@ -123,6 +125,11 @@ function redraw() {
     drawSakuras();
     drawTime();
     ctx.drawImage(imgs[neko.imgid], neko.x, neko.y);
+    if (show_pointer) {
+        const pointer = getoneko(generation + 2);
+
+        ctx.drawImage(imgs[64], pointer.x, pointer.y);
+    }
     generation++;
 }
 
@@ -138,6 +145,10 @@ function animate() {
     }
 
     requestAnimationFrame(animate);
+}
+
+function togglePointer() {
+    show_pointer = !show_pointer;
 }
 
 function init() {
