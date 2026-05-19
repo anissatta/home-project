@@ -30,7 +30,39 @@ const IMG_URLS = [
     './img/upright1.png', 
     './img/upright2.png', 
     './img/utogi1.png', 
-    './img/utogi2.png'
+    './img/utogi2.png',
+    './img/awake_sakura.png', 
+    './img/down1_sakura.png', 
+    './img/down2_sakura.png', 
+    './img/dtogi1_sakura.png', 
+    './img/dtogi2_sakura.png', 
+    './img/dwleft1_sakura.png', 
+    './img/dwleft2_sakura.png', 
+    './img/dwright1_sakura.png', 
+    './img/dwright2_sakura.png', 
+    './img/jare2_sakura.png', 
+    './img/kaki1_sakura.png', 
+    './img/kaki2_sakura.png', 
+    './img/left1_sakura.png', 
+    './img/left2_sakura.png', 
+    './img/ltogi1_sakura.png', 
+    './img/ltogi2_sakura.png', 
+    './img/mati2_sakura.png', 
+    './img/mati3_sakura.png', 
+    './img/right1_sakura.png', 
+    './img/right2_sakura.png', 
+    './img/rtogi1_sakura.png', 
+    './img/rtogi2_sakura.png', 
+    './img/sleep1_sakura.png', 
+    './img/sleep2_sakura.png', 
+    './img/up1_sakura.png', 
+    './img/up2_sakura.png', 
+    './img/upleft1_sakura.png', 
+    './img/upleft2_sakura.png', 
+    './img/upright1_sakura.png', 
+    './img/upright2_sakura.png', 
+    './img/utogi1_sakura.png', 
+    './img/utogi2_sakura.png'
 ];
 const NUM_IMGS = IMG_URLS.length;
 const CANVAS_W = 1920;
@@ -88,6 +120,7 @@ function redraw() {
 
     ctx.fillStyle = 'rgb(210, 210, 210)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    drawSakuras();
     drawTime();
     ctx.drawImage(imgs[neko.imgid], neko.x, neko.y);
     generation++;
@@ -114,6 +147,7 @@ function init() {
     ctx = canvas.getContext('2d');
     ctx.fillStyle = 'rgb(43, 168, 255)';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+    sakura_init();
     loadImages(function() {
         animate();
     });
