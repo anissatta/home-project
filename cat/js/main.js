@@ -78,6 +78,10 @@ var last = null;
 var generation = 0;
 var show_pointer = false;
 var show_icons = false;
+var bg = new Object();
+bg.r = 210;
+bg.g = 210;
+bg.b = 210;
 
 function addImage(on_complete) {
     loaded++;
@@ -147,7 +151,7 @@ function redraw() {
     const win_x = 320;
     const win_y = 480;
 
-    ctx.fillStyle = 'rgb(210, 210, 210)';
+    ctx.fillStyle = 'rgb(' + bg.r + ',' + bg.g + ',' + bg.b + ')';
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
     if (show_icons) {
         ctx.drawImage(imgs[65], CANVAS_W - 86, 24);
@@ -185,6 +189,12 @@ function togglePointer() {
 
 function toggleIcons() {
     show_icons = !show_icons;
+}
+
+function applyNewColor() {
+    bg.r = Math.floor(Math.random() * 255);
+    bg.g = Math.floor(Math.random() * 255);
+    bg.b = Math.floor(Math.random() * 255);
 }
 
 function init() {
