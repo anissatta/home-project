@@ -135,7 +135,7 @@ function drawTime() {
     datestr += now.getHours().toString().padStart(2, '0') + ':';
     datestr += now.getMinutes().toString().padStart(2, '0') + ':';
     datestr += now.getSeconds().toString().padStart(2, '0') + ' ';
-    datestr += 'https://anissatta.github.io/l/';
+    datestr += 'https://belong2korea.web.fc2.com/';
 
     ctx.font = '65px serif';
     ctx.textAlign = 'center';
