@@ -6,7 +6,13 @@
 - https://anissatta.github.io/home-project/konomiya/index.html
 - https://anissatta.github.io/home-project/sakura-js/index.html
 - https://anissatta.github.io/home-project/lesson3/index.html
-- :new: https://anissatta.github.io/home-project/cat/index.html
+- https://anissatta.github.io/home-project/cat/index.html
+
+---- 
+
+- :floppy_disk: https://anissatta.github.io/home-project/saranghae/index.html
+- :floppy_disk: https://anissatta.github.io/home-project/kiri/index.html
+- :floppy_disk: https://anissatta.github.io/home-project/mi-joya/index.html
 
 ---- 
 
